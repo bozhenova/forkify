@@ -15,10 +15,27 @@ export const renderItem = item => {
           </button>
       </li>`;
 
-  elements.shopping.insertAdjacentHTML('beforeend', markup);
+  elements.shoppingList.insertAdjacentHTML('beforeend', markup);
+};
+
+export const renderButton = () => {
+  const markup = `
+      <button class="btn shopping__clear-button">
+        <span>Clear list</span>
+      </button>`;
+  elements.shoppingList.insertAdjacentHTML('afterend', markup);
 };
 
 export const deleteItem = id => {
   const item = document.querySelector(`[data-itemid="${id}"]`);
   if (item) item.remove();
+};
+
+export const clearList = () => {
+  elements.shoppingList.innerHTML = '';
+};
+
+export const deleteButton = () => {
+  const button = document.querySelector('.shopping__clear-button');
+  button.remove();
 };

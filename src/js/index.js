@@ -79,9 +79,10 @@ const controlList = () => {
     const item = state.list.addItem(el.count, el.unit, el.ingredient);
     listView.renderItem(item);
   });
+  listView.renderButton();
 };
 
-elements.shopping.addEventListener('click', e => {
+elements.shoppingList.addEventListener('click', e => {
   const id = e.target.closest('.shopping__item').dataset.itemid;
   if (e.target.matches('.shopping__delete, .shopping__delete *')) {
     state.list.deleteItem(id);
@@ -91,8 +92,15 @@ elements.shopping.addEventListener('click', e => {
     state.list.updateCount(id, val);
   }
 });
-state.likes = new Likes();
-likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+elements.shopping.addEventListener('click', e => {
+  if (e.target.closest('.shopping__clear-button')) {
+    e.preventDefault();
+    state.list.clearList();
+    listView.clearList();
+    listView.deleteButton();
+  }
+});
 
 const controlLike = () => {
   if (!state.likes) state.likes = new Likes();
@@ -114,6 +122,17 @@ const controlLike = () => {
   likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
+window.addEventListener('load', () => {
+  state.list = new List();
+  state.likes = new Likes();
+  state.likes.getData();
+  state.list.getData();
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
+  state.likes.likes.forEach(likesView.renderLike);
+  state.list.items.forEach(listView.renderItem);
+  state.list.items.length > 0 && listView.renderButton();
+});
+
 elements.recipe.addEventListener('click', e => {
   if (e.target.matches('.btn-decrease, .btn-decrease *')) {
     if (state.recipe.servings > 1) {
@@ -124,7 +143,7 @@ elements.recipe.addEventListener('click', e => {
     state.recipe.updateServings('inc');
     recipeView.updateServingsIngredients(state.recipe);
   } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
-    controlList();
+    !elements.shoppingList.hasChildNodes() && controlList();
   } else if (e.target.matches('.recipe__love, .recipe__love *')) {
     controlLike();
   }
