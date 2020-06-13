@@ -1,13 +1,13 @@
-import Search from './models/Search';
-import * as searchView from '../js/views/searchView';
-import * as recipeView from '../js/views/recipeView';
-import * as listView from '../js/views/listView';
-import * as likesView from '../js/views/likesView';
-import { elements, renderLoader, clearLoader } from '../js/views/base';
-import Recipe from './models/Recipe';
-import List from './models/List';
-import Likes from './models/Likes';
-
+import Search from './js/models/Search';
+import * as searchView from './js/views/searchView';
+import * as recipeView from './js/views/recipeView';
+import * as listView from './js/views/listView';
+import * as likesView from './js/views/likesView';
+import { elements, renderLoader, clearLoader } from './js/views/base';
+import Recipe from './js/models/Recipe';
+import List from './js/models/List';
+import Likes from './js/models/Likes';
+import './style.css';
 const state = {};
 
 const controlSearch = async () => {
